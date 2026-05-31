@@ -97,11 +97,23 @@ def book_ticket():
 
 #function to initiate the process of cancelling tickets
 def cancel_ticket():
-   book_ticket.remove(booked_tickets)
+    cancel_id = int(input("Enter the Passenger ID:"))
+    for ticket in booked_tickets:
+        if cancel_id == ticket["Passenger id"]:
+            booked_tickets.remove(ticket)
+            print(f"Ticket of Passenger id {cancel_id} is cancelled ")
+            return
+    print("Ticket Not Found")
 
 #function to check booked tickets
 def check_ticket():
-   print (f"The Ticket Details are: {booked_tickets}")
+   id = int(input("Enter your Passenger ID:"))
+   for ticket in booked_tickets:
+       if id == ticket["Passenger id"]:
+           print (f"The Ticket Details are: {ticket}")
+           return
+       
+   print("Ticket Not Found!")
 
 while if_running:
     
