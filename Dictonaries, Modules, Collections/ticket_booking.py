@@ -1,4 +1,4 @@
-##Code logic is incomplete so don't fucking give dumbass inputs please I've been drained working on code logic
+##Code logic is incomplete so don't give unclear inputs please I've been drained working on code logic
 import random
 
 #setting up lists for trains for each route
