@@ -59,21 +59,16 @@ def book_ticket():
    if available_tickets[p_train] + p_count > max_tickets:
        print("Tickets are unavailable. Choose another train!")
        return
+
 # yes payment logic is trash I'm just learning. feel free to pinpoint the errors and give solutions too
    else:
         tot_amt = p_count * tamt
         print(f"Pay Your Amount: {tot_amt}")
         paid = int(input("Enter Your Amount:"))
-
-        while tot_amt > paid:
-            ramt = tot_amt - paid
-            print(f"Kindly pay the full amount. Balance amount to be paid: {ramt}")
-            rpaid = int(input("Enter The Amount:"))
-            paid += rpaid
-
-        if paid > tot_amt:
-            print("Remaining amount is sent back to your account!")
-
+        while paid != tot_amt:
+            print("Transaction Cancelled kindly pay the full amount in single transaction!")
+            paid = int(input("Enter Your Amount:"))
+            return
         print("The Transaction is Done")
 
 # update the available tickets
@@ -102,6 +97,8 @@ def cancel_ticket():
         if cancel_id == ticket["Passenger id"]:
             booked_tickets.remove(ticket)
             print(f"Ticket of Passenger id {cancel_id} is cancelled ")
+            p_train = ticket["Booked Train"]
+            available_tickets[p_train] -= int(ticket["Passenger Count"])
             return
     print("Ticket Not Found")
 
