@@ -5,14 +5,22 @@ I'm just learning basics of python so I could use it when I need automation in d
 
 ## Installation & Getting Started
 
-to clone this repository : `git clone "https://github.com/Lucifer-Newstar/python-practice.git"`
-to run the file : `python filename.py`
+To clone this repository : `git clone "https://github.com/Lucifer-Newstar/python-practice.git"`
+
+
+To run the file : `python filename.py`
 
 ## what's inside
 
 ├── basic_concepts/      # Variables, loops, and basic data structures
+
+
 ├── OOP_practice/        # Classes, inheritance, and polymorphism
+
+
 ├── mini_projects/       # Small command-line applications
+
+
 └── requirements.txt     # External project dependencies
 
 ## Flaws
