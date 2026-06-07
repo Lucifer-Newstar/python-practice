@@ -1,12 +1,20 @@
-## flashy stuff to let you know ik how to write a readme markup 
+## Introduction 
 
-This is just my python learning repo I just push all the codes I practice 
+This is just my python learning repo I just push all the codes I practice. I learned from bro-code python tutorial.
+I'm just learning basics of python so I could use it when I need automation in devops.
 
-## let's pretend you're dumb
+## Installation & Getting Started
 
-to clone this repo which no one would : `git clone "too lazy to put the link here please do it yourself uwu"`
-to run the file of basic leeevl code heck yeah : `python filename.py`
+to clone this repository : `git clone "https://github.com/Lucifer-Newstar/python-practice.git"`
+to run the file : `python filename.py`
 
 ## what's inside
 
-my learning progress ofc what else would you find here in this
+├── basic_concepts/      # Variables, loops, and basic data structures
+├── OOP_practice/        # Classes, inheritance, and polymorphism
+├── mini_projects/       # Small command-line applications
+└── requirements.txt     # External project dependencies
+
+## Flaws
+
+I'm just a beginner practicing python. kindly give comments if there are logical errors or any bugs in the program. Thank you!
