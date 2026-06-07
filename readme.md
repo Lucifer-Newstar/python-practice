@@ -10,8 +10,8 @@ To run the file : `python filename.py`
 
 ## what's inside
 
-├── basic_concepts/      # Variables, loops, and basic data structures\
-├── OOP_practice/        # Classes, inheritance, and polymorphism\
+├── basics/      # Variables, loops, and basic data structures\
+├── OOP/        # Classes, inheritance, and polymorphism\
 ├── mini_projects/       # Small command-line applications\
 └── requirements.txt     # External project dependencies
 
