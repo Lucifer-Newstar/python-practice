@@ -78,6 +78,8 @@ class bank_account:
     def checkaccount(self):
         
         search_id = input("Enter your User ID:")
+
+        self.users = self.load_data()
         
         for user_details in self.users:
             if user_details['User ID'] == search_id:

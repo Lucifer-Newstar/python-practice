@@ -19,9 +19,9 @@ class ATM(bank_balance):
         print("Welcome to bank of new york!")
         atm_u_id = input("Enter your User ID: ")
 
-        self.users = self.bank.load_data()
+        self.bank.users = self.bank.load_data()
 
-        for user in self.users:
+        for user in self.bank.users:
             if user["User ID"] == atm_u_id:
                 self.user = user
                 self.current_balance = user["Balance"]
@@ -78,7 +78,7 @@ if __name__ == "__main__":
     atm = ATM(bank)
     if atm.login():
         while True:
-            print(f"Welcome to New York Bank ATM{atm.user['Name']}.")
+            print(f"Welcome to New York Bank ATM , {atm.user['Name']}.")
             print("\n=== ATM MACHINE MENU ===")
             print("1. Deposit Money")
             print("2. Withdraw Money")
