@@ -4,6 +4,7 @@ import string
 from datetime import date
 import os
 import json
+import sys
 
 
 class bank_account:
@@ -26,8 +27,7 @@ class bank_account:
                 ##apparently I opened the datafile and deleted the "" of u_id and this error showed up so I came up with this and only this solution for except JSONDecodeError is from ai
             except json.JSONDecodeError:
                 print("Your JSON has syntax error. i.e you messed up a comma or doublecollon or stuff that should be in JSON")
-                print("The list is emptied")
-                return[]
+                sys.exit()
         return[]
         
     def save_data(self):
