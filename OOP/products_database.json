@@ -1,0 +1,89 @@
+{
+    "electronics": [
+        {
+            "product_id": "ELEC001",
+            "name": "Laptop",
+            "price": 45000,
+            "category": "electronics",
+            "quantity": 10
+        },
+        {
+            "product_id": "ELEC002",
+            "name": "Smartphone",
+            "price": 25000,
+            "category": "electronics",
+            "quantity": 25
+        },
+        {
+            "product_id": "ELEC003",
+            "name": "Headphones",
+            "price": 2000,
+            "category": "electronics",
+            "quantity": 50
+        }
+    ],
+    "books": [
+        {
+            "product_id": "BOOK001",
+            "name": "Python Programming",
+            "price": 500,
+            "category": "books",
+            "quantity": 30
+        },
+        {
+            "product_id": "BOOK002",
+            "name": "Harry Potter",
+            "price": 800,
+            "category": "books",
+            "quantity": 15
+        }
+    ],
+    "grocery": [
+        {
+            "product_id": "GROC001",
+            "name": "Rice",
+            "price": 60,
+            "category": "grocery",
+            "quantity": 100
+        },
+        {
+            "product_id": "GROC002",
+            "name": "Milk",
+            "price": 50,
+            "category": "grocery",
+            "quantity": 40
+        }
+    ],
+    "stationaries": [
+        {
+            "product_id": "STAT001",
+            "name": "Notebook",
+            "price": 40,
+            "category": "stationaries",
+            "quantity": 200
+        },
+        {
+            "product_id": "STAT002",
+            "name": "Pen",
+            "price": 10,
+            "category": "stationaries",
+            "quantity": 500
+        }
+    ],
+    "textiles": [
+        {
+            "product_id": "TEXT001",
+            "name": "T-Shirt",
+            "price": 500,
+            "category": "textiles",
+            "quantity": 50
+        },
+        {
+            "product_id": "TEXT002",
+            "name": "Jeans",
+            "price": 1200,
+            "category": "textiles",
+            "quantity": 30
+        }
+    ]
+}

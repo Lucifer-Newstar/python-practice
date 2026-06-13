@@ -18,5 +18,27 @@
         "Phone Number": 9876543092,
         "Address": "abs street manhattan",
         "Balance": 500
+    },
+    {
+        "Name": "John Doe",
+        "User ID": "JohnDoeabc12",
+        "Account Number": 42378,
+        "Card No": "4521-7890-1234-5678",
+        "Exp Date": "15:07:2029",
+        "Phone Number": "9876543210",
+        "Address": "123 Main Street, New York",
+        "Balance": 5000,
+        "Role": "customer"
+    },
+    {
+        "Name": "Jane Smith",
+        "User ID": "JaneSmithxyz98",
+        "Account Number": 89123,
+        "Card No": "1234-5678-9012-3456",
+        "Exp Date": "20:12:2028",
+        "Phone Number": "8765432109",
+        "Address": "456 Park Avenue, New York",
+        "Balance": 15000,
+        "Role": "seller"
     }
 ]
