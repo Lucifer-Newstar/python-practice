@@ -27,7 +27,6 @@ class products:
     def from_dict(data):
         return products(data["product_id"], data["name"], data["price"], data["category"])
     
-
 class items(ABC):
     
     def __init__(self , category):
@@ -91,6 +90,10 @@ class items(ABC):
     @abstractmethod
     def calc_tax(self):
         pass
+    
+    def display_products(self):
+        for product in self.products:
+            print(product)
     
 
 class electronics(items):   
