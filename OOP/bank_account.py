@@ -14,7 +14,7 @@ class bank_account:
     def __init__(self):
         
         ##to store them in a file
-        self.file_path = "database.json"
+        self.file_path = "acc_database.json"
         ## to restore users if exists
         self.users = self.load_data()
     
