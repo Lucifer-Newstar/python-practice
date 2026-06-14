@@ -11,7 +11,8 @@ class Users:
         self.load_data()
         
     def load_data(self):
-        self.users = []  # Clear existing users to avoid duplicates
+        ## Clear existing users to avoid duplicates
+        self.users = [] 
         if os.path.exists(self.file_path):
             try:
                 with open(self.file_path, "r") as file:

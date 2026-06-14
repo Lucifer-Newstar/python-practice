@@ -20,7 +20,7 @@ class Customer:
             'stationaries': Stationaries(),
             'textiles': Textiles()
         }
-    
+    ##loads data from database
     def load_data(self):
        
         file_path = "products_database.json"
@@ -29,6 +29,7 @@ class Customer:
                 return json.load(file)
         return {}
     
+    ##retriving tax rate for each category
     def get_tax_rate(self, category):
         
         if category in self.categories:
@@ -40,7 +41,9 @@ class Customer:
         search = input("Enter product name/id to search: ").lower()
         all_products = self.load_data()
 
+        ##list to store matched products
         matched_product = []
+        ##loop through all products
         for category, product_list in all_products.items():
             for product in product_list:
                 if search in product['name'].lower() or search in product['product_id'].lower():
@@ -55,16 +58,17 @@ class Customer:
             print("No products found")
 
         return matched_product
-    
+    ## to add items to cart
     def add_to_cart(self):
         
         p_id = input("Enter product id or name to add to cart: ")
         all_products = self.load_data()
         
+        ## to find the product in the database
         for category, product_list in all_products.items():
             for product in product_list:
                 if p_id == product['product_id'] or p_id == product['name']:
-
+                    ## to get quantity and check product availability
                     try:
                         quantity = int(input("Enter quantity: "))
                     except ValueError:
@@ -90,7 +94,7 @@ class Customer:
                     return
         
         print("Product not found")
-        
+    ## to remove from cart    
     def remove_from_cart(self):
         
         if not self.cart:
@@ -137,7 +141,7 @@ class Customer:
        
        print(f"\nTotal Cart Amount: {total:.2f}")
            
-    
+    ## func to pay amount
     def checkout(self):
         if not self.cart:
             print("Cart is empty. Add items before checkout.")
@@ -158,7 +162,8 @@ class Customer:
         if self.c_balance < total:
             print("Insufficient balance")
             return
-            
+
+        ##payment logic    
         pay = input("Do you want to pay? (y/n): ")
         if pay == 'y':
             self.c_balance -= total
@@ -208,6 +213,7 @@ class Customer:
         else:
             print("Payment cancelled")
 
+    ##func to update the bank balance from this program
     def update_bank_balance(self):
         try:
             amount = float(input("Enter the amount to be added: "))
@@ -262,6 +268,7 @@ class Customer:
                 print("Invalid choice")
                 continue
 
+##same functions to load data and login
 def load_data():
         
     file_path = "acc_database.json"
