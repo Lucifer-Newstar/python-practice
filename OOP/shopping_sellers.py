@@ -1,11 +1,12 @@
 import os
 import sys
 import json
-from shopping_inventory import products, items ,books, electronics, grocery, stationaries, textiles
-from bank_account import bank_account
+from shopping_inventory import Products, Items, Books, Electronics, Grocery, Stationaries, Textiles
+from bank_account import BankAccount
 
-class seller:
+class Seller:
     def __init__(self, user_data):
+        ## to initialize seller data
         self.user_data = user_data
         self.s_id = user_data['User ID']
         self.s_name = user_data['Name']
@@ -13,11 +14,13 @@ class seller:
         self.s_address = user_data['Address']
         self.s_balance = user_data['Balance']
 
-        self.electronics = electronics()
-        self.stationaries = stationaries()
-        self.textiles = textiles()
-        self.books = books()
-        self.grocery = grocery()
+        ## to initialize categories
+
+        self.electronics = Electronics()
+        self.stationaries = Stationaries()
+        self.textiles = Textiles()
+        self.books = Books()
+        self.grocery = Grocery()
 
         self.categories = {
             "electronics" : self.electronics ,
@@ -28,23 +31,33 @@ class seller:
         }
 
     def add_item(self):
-        
+        ## to add item to inventory
+
         print("Available categories: electronics, stationaries, textiles, books, grocery")
         category = input("Enter product type: ").lower()
 
+        ## if seller decides to enter a non-existent category even after printing available categories
         if category not in self.categories:
-            print("Invalid Product Category")
+            print("Invalid Product Category. We can't add new one just for you sorry!")
             return
-        
+        ## to add products
         try:
-            p_id = (input("Enter product ID: "))
+            p_id = input("Enter product ID: ")
             p_name = input("Enter product name: ")
             p_price = float(input("Enter product price: "))
             p_quantity = int(input("Enter product quantity: "))
             
-            new_product = products(p_id, p_name, p_price, category)
+            if p_price <= 0:
+                print("Price must be greater than 0.")
+                return
+            if p_quantity <= 0:
+                print("Quantity must be greater than 0.")
+                return
+            
+            new_product = Products(p_id, p_name, p_price, category)
             new_product.quantity = p_quantity
             self.categories[category].add_product(new_product)
+            self.categories[category].save_data()
 
             tax_rate = self.categories[category].calc_tax()
             print(f"Tax rate for {category}: {tax_rate * 100}%")
@@ -53,7 +66,7 @@ class seller:
             print("Invalid input. Please enter valid values.")
             return
 
-
+    ## to remove products
     def remove_item(self):
         category = input("Enter product type: ").lower()
 
@@ -63,14 +76,25 @@ class seller:
         
         p_id = input("Enter product ID: ")
 
-        delete = products(p_id, "", 0, category)
+        # Check if product exists before removing
+        product_exists = False
+        for product in self.categories[category].products:
+            if product.product_id == p_id:
+                product_exists = True
+                break
+        
+        if not product_exists:
+            print(f"Product ID {p_id} not found in {category}")
+            return
+
+        delete = Products(p_id, "", 0, category)
         self.categories[category].remove_product(delete)
     
     def display(self):
         print(f"Hello {self.s_name}. your inventory list is:")
         has_products = False
-        
-        for c_name , c_object in self.categories.items():
+
+        for c_name, c_object in self.categories.items():
             
             if c_object.products:
                 has_products = True
@@ -78,7 +102,7 @@ class seller:
                 print(f"Total products in {c_name}: {len(c_object.products)}")
         
         if not has_products:
-            print("No products in inventory")
+            print("Not yet! add products in inventory to look into em")
         
     def seller_menu(self):
         while True:
@@ -97,7 +121,7 @@ class seller:
                 break
             else:
                 print("Invalid choice")
-
+## to load existing data
 def load_data():
         
     file_path = "acc_database.json"
@@ -106,7 +130,7 @@ def load_data():
         with open(file_path, 'r') as file:
             return json.load(file)
     return []
-    
+##login logic    
 def login():
     user_id = input("Enter user ID: ")
     user_data = load_data()
@@ -124,7 +148,7 @@ def login():
         if choice == 'y':
             return None
         else:
-            bank = bank_account()
+            bank = BankAccount()
             bank.register()
 
             print("Registration successful. Login with your new ID!")
@@ -141,5 +165,5 @@ if __name__ == "__main__":
     
     user = login()
     if user:
-        seller_obj = seller(user)
+        seller_obj = Seller(user)
         seller_obj.seller_menu()

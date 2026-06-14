@@ -1,10 +1,9 @@
 import os
 import json
-from unicodedata import category
-from shopping_inventory import products, books, electronics, grocery, stationaries, textiles
-from bank_account import bank_account
+from shopping_inventory import Products, Books, Electronics, Grocery, Stationaries, Textiles
+from bank_account import BankAccount
 
-class customer:
+class Customer:
     def __init__(self, user):
         self.user = user
         self.c_id = user['User ID']
@@ -15,11 +14,11 @@ class customer:
         self.cart = []
 
         self.categories = {
-            'books': books(),
-            'electronics': electronics(),
-            'grocery': grocery(),
-            'stationaries': stationaries(),
-            'textiles': textiles()
+            'books': Books(),
+            'electronics': Electronics(),
+            'grocery': Grocery(),
+            'stationaries': Stationaries(),
+            'textiles': Textiles()
         }
     
     def load_data(self):
@@ -66,7 +65,11 @@ class customer:
             for product in product_list:
                 if p_id == product['product_id'] or p_id == product['name']:
 
-                    quantity = int(input("Enter quantity: "))
+                    try:
+                        quantity = int(input("Enter quantity: "))
+                    except ValueError:
+                        print("Invalid input. Please enter a valid number.")
+                        return
 
                     if product['quantity'] <= 0:
                         print(f"{product['name']} is out of stock")
@@ -96,7 +99,7 @@ class customer:
         
         self.view_cart()
         try:
-            delete_id = int(input("Enter product id to remove from cart: ")) 
+            delete_id = int(input("Enter item number to remove from cart: ")) 
 
             if 0 <= delete_id < len(self.cart):
                 removed_product = self.cart.pop(delete_id)
@@ -117,7 +120,7 @@ class customer:
        print("Cart:")
 
        total = 0
-       for i , item in enumerate(self.cart , 1):
+       for i, item in enumerate(self.cart, 1):
            product = item['product_name']
            price = item['product_price']
            quantity = item['product_quantity']
@@ -127,14 +130,19 @@ class customer:
            tax_percent = self.get_tax_rate(category)
            initial_price = price * quantity
            tax_amount = initial_price * tax_percent
-           total = initial_price + tax_amount
            item_total = initial_price + tax_amount
            total += item_total
 
            print(f"  Name : {product} - Price : {price} - Quantity : {quantity} - Tax Amount : {tax_amount} - Item Total : {item_total}")
+       
+       print(f"\nTotal Cart Amount: {total:.2f}")
            
     
     def checkout(self):
+        if not self.cart:
+            print("Cart is empty. Add items before checkout.")
+            return
+        
         total = 0
         for item in self.cart:
             price = item['product_price']
@@ -155,6 +163,7 @@ class customer:
         if pay == 'y':
             self.c_balance -= total
 
+            # Update bank balance
             file_path = "acc_database.json"
             if os.path.exists(file_path):
                 with open(file_path, 'r') as file:
@@ -168,6 +177,30 @@ class customer:
                 with open(file_path, 'w') as file:
                     json.dump(users, file, indent=4)
             
+            # Deduct inventory
+            products_file = "products_database.json"
+            if os.path.exists(products_file):
+                with open(products_file, 'r') as file:
+                    all_products = json.load(file)
+                
+                for item in self.cart:
+                    category = item['category']
+                    product_id = item['product_id']
+                    quantity = item['product_quantity']
+                    
+                    if category in all_products:
+                        for product in all_products[category]:
+                            if product['product_id'] == product_id:
+                                product['quantity'] -= quantity
+                                break
+                
+                with open(products_file, 'w') as file:
+                    json.dump(all_products, file, indent=4)
+            
+            # Reload category objects to reflect updated inventory
+            for category_name in self.categories:
+                self.categories[category_name].load_data()
+            
             print("Payment successful")
             print(f"Your current bank balance is : {self.c_balance:.2f}")
             
@@ -175,8 +208,12 @@ class customer:
         else:
             print("Payment cancelled")
 
-    def update_bank_balance(self, amount):
-        amount = float(input("Enter the amount to be added: "))
+    def update_bank_balance(self):
+        try:
+            amount = float(input("Enter the amount to be added: "))
+        except ValueError:
+            print("Invalid input. Please enter a valid number.")
+            return
         file_path = "acc_database.json"
         if os.path.exists(file_path):
             with open(file_path, 'r') as file:
@@ -189,7 +226,7 @@ class customer:
                     break
             
             with open(file_path, 'w') as file:
-                json.dump(users, file)
+                json.dump(users, file, indent=4)
             
             print(f"Your current bank balance is : {self.c_balance:.2f}")
                
@@ -223,7 +260,7 @@ class customer:
                 return False
             else:
                 print("Invalid choice")
-                return None
+                continue
 
 def load_data():
         
@@ -251,7 +288,7 @@ def login():
         if choice == 'y':
             return None
         else:
-            bank = bank_account()
+            bank = BankAccount()
             bank.register()
 
             print("Registration successful. Login with your new ID!")
@@ -267,5 +304,5 @@ if __name__ == "__main__":
     
     user = login()
     if user:
-        customer_obj = customer(user)
+        customer_obj = Customer(user)
         customer_obj.customer_menu()

@@ -7,7 +7,7 @@ import json
 import sys
 
 
-class bank_account:
+class BankAccount:
 
     
 
@@ -22,33 +22,42 @@ class bank_account:
         ##to load data if exists
         if os.path.exists(self.file_path):
             try:
-                with open(self.file_path , "r") as file:
+                with open(self.file_path, "r") as file:
                     return json.load(file)
                 ##apparently I opened the datafile and deleted the "" of u_id and this error showed up so I came up with this and only this solution for except JSONDecodeError is from ai
             except json.JSONDecodeError:
                 print("Your JSON has syntax error. i.e you messed up a comma or doublecollon or stuff that should be in JSON")
                 sys.exit()
-        return[]
+        return []
         
     def save_data(self):
         ##to save data into folder
-        with open(self.file_path , "w") as file:
-            json.dump(self.users , file , indent = 4)
+        with open(self.file_path, "w") as file:
+            json.dump(self.users, file, indent=4)
 
 
     def register(self):
         print('Welcome to bank of new york! Kindly fill in the details to register')
         u_name = input("Enter Your Name:")
         ##To create a id that adds random 5 letters to the user name 
-        u_id = u_name + "" .join(random.choices(string.ascii_letters , k=5 ))
+        u_id = u_name + "".join(random.choices(string.ascii_letters, k=5))
+        
+        # Check for duplicate User ID
+        for user in self.users:
+            if user['User ID'] == u_id:
+                u_id = u_name + "".join(random.choices(string.ascii_letters, k=5))
+                break
         acc_no = random.randint(10000,99999)
         ##To create a card number that has 16 numbers and a - between 4 numbers
-        card_no = "-" .join(str(random.randint(1000,9999)) for _ in range (4))
+        card_no = "-".join(str(random.randint(1000, 9999)) for _ in range(4))
         ##apparetly we need to make this to string to save this to JSON... sometimes using ai is better than just sitting and staring at the error for hours.
-        pre_exp_date = date.today().replace(year = date.today().year + 5)
-        exp_date = pre_exp_date.strftime(" %d:%m:%Y ")
+        pre_exp_date = date.today().replace(year=date.today().year + 5)
+        exp_date = pre_exp_date.strftime("%d:%m:%Y")
         try:
-            ph_no = int(input("Enter your phone number : "))
+            ph_no = input("Enter your phone number : ")
+            if not ph_no.isdigit() or len(ph_no) < 10:
+                print("Enter a valid phone number (at least 10 digits)!")
+                return
         except ValueError:
             print("Enter a valid number!")
             return
@@ -65,6 +74,12 @@ class bank_account:
                 'Address' : addr,
                 'Balance' : 500
             }
+        
+        # Check if user already exists
+        for user in self.users:
+            if user['User ID'] == u_id:
+                print("User ID already exists. Please try again.")
+                return
         
         self.users.append(user_details)
         self.save_data()
@@ -83,7 +98,7 @@ class bank_account:
         
         for user_details in self.users:
             if user_details['User ID'] == search_id:
-                for key , value in user_details.items():
+                for key, value in user_details.items():
                     print(f"{key} : {value}")
                 return
         
@@ -92,7 +107,7 @@ class bank_account:
 ##I'm importing this to another program so I don't wanna mess up with this while loop            
 if __name__ == "__main__":
 
-    bank = bank_account()
+    bank = BankAccount()
 
     while True:
         choice = input("Enter your Action : 1. Register 2. Check Account 3. Exit : ")

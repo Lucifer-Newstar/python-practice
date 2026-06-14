@@ -1,16 +1,17 @@
-from bank_account import bank_account
+from bank_account import BankAccount
 import time
 import os
 import json
 
-class bank_balance():
+class BankBalance:
 
     def __init__(self):
         self.current_balance = 0
 
-class ATM(bank_balance):
+class ATM(BankBalance):
 
     def __init__(self, bank_instance):
+        ## to initialize BankBalance class
         super().__init__()
         self.bank = bank_instance
         self.user = None
@@ -18,7 +19,7 @@ class ATM(bank_balance):
     def login(self):
         print("Welcome to bank of new york!")
         atm_u_id = input("Enter your User ID: ")
-
+        ## to load data from json file
         self.bank.users = self.bank.load_data()
 
         for user in self.bank.users:
@@ -30,10 +31,14 @@ class ATM(bank_balance):
             
         print("User ID not found! Register your account if you're new")
         return False
-    
+    ##function to deposit money
     def deposit(self):
         
-        self.deposit_amt = int(input("Enter the deposit amount:"))
+        try:
+            self.deposit_amt = int(input("Enter the deposit amount:"))
+        except ValueError:
+            print("Invalid input. Please enter a valid number.")
+            return
 
         if self.deposit_amt <= 0:
             print("The amount deposited can't be 0 or Low")
@@ -48,9 +53,14 @@ class ATM(bank_balance):
         time.sleep(1)
         print(f"Amount Rs. {self.deposit_amt} is deposited to your account")
 
+    ##function to withdraw money
     def withdraw(self):
 
-        self.withdraw_amt = int(input("Enter the withdrawal amount:"))
+        try:
+            self.withdraw_amt = int(input("Enter the withdrawal amount:"))
+        except ValueError:
+            print("Invalid input. Please enter a valid number.")
+            return
 
         if self.withdraw_amt > self.current_balance:
             print("Insufficient Bank Balance! You're Broke!")
@@ -59,7 +69,7 @@ class ATM(bank_balance):
         elif self.withdraw_amt <= 0:
             print("The amount to be withdrawn can't be 0 or Low")
             return
-
+        ##to reduce the amount from current balance
         self.current_balance -= self.withdraw_amt
 
         self.user["Balance"] = self.current_balance
@@ -73,9 +83,11 @@ class ATM(bank_balance):
         print(f"Your account balance is : {self.current_balance}")
 
 if __name__ == "__main__":
-
-    bank = bank_account()
+    ##to create an instance of bank_account 
+    bank = BankAccount()
+    ##to create an instance of ATM class
     atm = ATM(bank)
+    ##atm user login
     if atm.login():
         while True:
             print(f"Welcome to New York Bank ATM , {atm.user['Name']}.")
