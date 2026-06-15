@@ -69,8 +69,8 @@ To run the file : `python filename.py`
 
 ## OOP Pillars - Complete Coverage
 
-| Pillar | Files Implementing | Strength |
-|--------|-------------------|----------|
+| Pillar | Files Implementing | 
+|--------|-------------------|
 | **Encapsulation** | `property-class-static.py`, `Abstraction-Encapsulation.py`, `bank_account.py` 
 | **Inheritance** | `inheritance-polymorphism.py`, `shopping_inventory.py`, `ATM-machine.py` 
 | **Polymorphism** | `ducktyping-polymorphism.py`, `inheritance-polymorphism.py`, `Method Overriding...py` 
@@ -78,8 +78,8 @@ To run the file : `python filename.py`
 
 ## Advanced Python Features
 
-| Feature | File | Proficiency |
-|---------|------|-------------|
+| Feature | File | 
+|---------|------|
 | Decorators (`@property`) | `property-class-static.py` 
 | Class Methods | `property-class-static.py` 
 | Static Methods | `property-class-static.py` 
