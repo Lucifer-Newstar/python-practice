@@ -12,8 +12,7 @@ To run the file : `python filename.py`
 
 ├── basics/      # Variables, loops, and basic data structures\
 ├── OOP/        # Classes, inheritance, polymorphism, File and Exception Handling\
-├── mini_projects/       # Small command-line applications\
-└── requirements.txt     # External project dependencies
+└── mini_projects/       # Small command-line applications\
 
 # Difficulty Progression:
 
